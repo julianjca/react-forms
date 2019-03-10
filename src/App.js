@@ -9,32 +9,42 @@ class App extends Component {
     address: '',
     phone: '',
     birthDate: '',
-    emailVerified: false
   }
 
-  checkEmail(name, value){
+  checkEmail(value){
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if(name === 'email'){
-      const result = emailRegex.test(value);
-      console.log(result)
-      if(result){
-        this.setState({
-          emailVerified: true
-        })
-      }
+
+    return emailRegex.test(value);
+  }
+
+  onSubmit = () =>{
+    const errors = {};
+    if (this.state.name === '') errors.name = 'Field harus diisi';
+    if (!this.state.birthDate) errors.birthDate = 'Field harus diisi';
+    if (this.state.phone === '') errors.phone = 'Field harus diisi';
+    if (!this.checkEmail(this.state.email)) errors.email = 'Format email salah';
+    if (this.state.address === '') errors.address = 'Field harus diisi';
+
+    const valid = Object.keys(errors).length === 0;
+    if(valid){
+      // DO API CALL
+      alert('success submiting form');
     }
-    return;
+    else {
+      this.setState({
+        errors
+      })
+    }
   }
 
   handleChange = e => {
-    this.checkEmail(e.target.name, e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     });
   }
 
   render() {
-    const { emailVerified } = this.state;
+    const { errors } = this.state;
     return (
       <div className="App">
         <input
@@ -44,6 +54,7 @@ class App extends Component {
           required
           onChange={this.handleChange}
         />
+        <span>{errors.name || ''}</span>
 
         <input
           type="text"
@@ -52,6 +63,8 @@ class App extends Component {
           required
           onChange={this.handleChange}
         />
+        <span>{errors.email || ''}</span>
+
 
         <input
           type="text"
@@ -61,6 +74,9 @@ class App extends Component {
           onChange={this.handleChange}
         />
 
+        <span>{errors.phone || ''}</span>
+
+
         <input
           type="text"
           name="address"
@@ -68,6 +84,8 @@ class App extends Component {
           required
           onChange={this.handleChange}
         />
+        <span>{errors.address || ''}</span>
+
 
         <input
           type="date"
@@ -76,8 +94,10 @@ class App extends Component {
           required
           onChange={this.handleChange}
         />
+        <span>{errors.birthDate || ''}</span>
 
-        <button disabled={!emailVerified}>Submit</button>
+
+        <button onClick={this.onSubmit}>Submit</button>
       </div>
     );
   }

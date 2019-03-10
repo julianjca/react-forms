@@ -4,8 +4,13 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: 50px auto;
 }
 
+span {
+  color: red;
+  font-size: 0.4rem;
+}
 input {
   display: block;
 }
