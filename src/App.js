@@ -27,8 +27,15 @@ class App extends Component {
 
     const valid = Object.keys(errors).length === 0;
     if(valid){
+      this.setState({
+        errors,
+        email: '',
+        name: '',
+        address: '',
+        phone: '',
+        birthDate: '',
+      }, () => alert('success submitting form'))
       // DO API CALL
-      alert('success submiting form');
     }
     else {
       this.setState({
@@ -38,6 +45,11 @@ class App extends Component {
   }
 
   handleChange = e => {
+    if(e.target.name === "birthDate"){
+      this.setState({
+        [e.target.name]: new Date(e.target.value)
+      });
+    }
     this.setState({
       [e.target.name]: e.target.value
     });

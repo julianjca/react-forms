@@ -13,6 +13,11 @@ span {
 }
 input {
   display: block;
+  margin: 10px auto;
+}
+
+button{
+  margin: 10px auto;
 }
 
 .App-logo {
