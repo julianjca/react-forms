@@ -15,15 +15,20 @@ let maxHeight = 200;
 let width = img.width;
 let height = img.height;
 // check if width > height
-if (width > height) {
-  if (width > maxWidth) {
-    height *= maxWidth / width;
-    width = maxWidth;
-  }
+let canvas = document.createElement('canvas'),
+let ctx = canvas.getContext("2d");
+if(width > height) {
+  canvas.width = width;
+  canvas.height = height;
 } else {
-  if (height > maxHeight) {
-    width *= maxHeight / height;
-    height = maxHeight;
-  }
+  canvas.width = height;
+  canvas.height = width;
 }
+
+// rotate image to the right 90 degree
+ctx.rotate(0.5 * Math.PI)
+ctx.translate(0, -height)
+
+// draw the image
+ctx.drawImage(img, 0, 0);
 ```
